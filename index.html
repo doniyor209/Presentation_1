@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Презентация: Толерантность</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neonCyan: '#00f3ff',
+                        neonPurple: '#b026ff',
+                        neonPink: '#ff007f',
+                        neonBlue: '#1e90ff',
+                        darkBg: '#080a10',
+                        glassBg: 'rgba(15, 23, 42, 0.65)',
+                        glassBorder: 'rgba(0, 243, 255, 0.25)',
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        neonCyan: '0 0 20px rgba(0, 243, 255, 0.5), inset 0 0 15px rgba(0, 243, 255, 0.2)',
+                        neonPurple: '0 0 20px rgba(176, 38, 255, 0.5), inset 0 0 15px rgba(176, 38, 255, 0.2)',
+                        neonPink: '0 0 20px rgba(255, 0, 127, 0.5), inset 0 0 15px rgba(255, 0, 127, 0.2)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Neon Utilities and Animations */
+        body {
+            background-color: #05070e;
+            color: #e2e8f0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+        }
+
+        /* Ambient glowing dots background canvas */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(13, 18, 36, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card-warning {
+            background: rgba(30, 10, 20, 0.65);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 0, 127, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(255, 0, 127, 0.15);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 243, 255, 0.6);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), inset 0 0 10px rgba(0, 243, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        /* Glowing Text Styles */
+        .neon-text-cyan {
+            color: #00f3ff;
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.7), 0 0 20px rgba(0, 243, 255, 0.4);
+        }
+
+        .neon-text-purple {
+            color: #d8b4fe;
+            text-shadow: 0 0 8px rgba(176, 38, 255, 0.8), 0 0 20px rgba(176, 38, 255, 0.5);
+        }
+
+        .neon-text-pink {
+            color: #ff007f;
+            text-shadow: 0 0 8px rgba(255, 0, 127, 0.8), 0 0 20px rgba(255, 0, 127, 0.5);
+        }
+
+        /* Neon Glow Outline Buttons */
+        .btn-neon-cyan {
+            position: relative;
+            background: rgba(0, 243, 255, 0.08);
+            border: 1px solid #00f3ff;
+            color: #00f3ff;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-neon-cyan:hover {
+            background: #00f3ff;
+            color: #080a10;
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.8);
+            transform: scale(1.05);
+        }
+
+        .btn-neon-purple {
+            position: relative;
+            background: rgba(176, 38, 255, 0.1);
+            border: 1px solid #b026ff;
+            color: #d8b4fe;
+            box-shadow: 0 0 10px rgba(176, 38, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-neon-purple:hover {
+            background: #b026ff;
+            color: #ffffff;
+            box-shadow: 0 0 25px rgba(176, 38, 255, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* Slide Animation Container */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.92) translateZ(-50px);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, visibility 0.6s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateZ(0);
+            z-index: 10;
+        }
+
+        .slide.prev-slide {
+            transform: scale(1.05) translateY(-20px);
+            opacity: 0;
+        }
+
+        /* Slide Content Staggered Animations */
+        .slide.active .animate-item {
+            animation: slideInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar styling for modals */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(5, 7, 14, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 243, 255, 0.4);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 243, 255, 0.8);
+        }
+
+        /* 3D tilt perspective wrapper */
+        .tilt-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* Glowing Pulse FX */
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.6)); }
+            50% { filter: drop-shadow(0 0 30px rgba(176, 38, 255, 0.9)); }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 4s infinite alternate ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-slate-100 h-screen w-screen relative font-sans overflow-hidden">
+
+    <!-- Particle canvas background -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Top Futuristic Header -->
+    <header class="fixed top-0 left-0 right-0 z-30 px-6 py-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent backdrop-blur-xs">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-neonCyan flex items-center justify-center shadow-neonCyan">
+                <i class="fa-solid font-bold fa-hands-holding-child text-neonCyan text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-orbitron font-bold text-sm sm:text-base tracking-wider text-white flex items-center gap-2">
+                    ТОЛЕРАНТНОСТЬ
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-neonCyan hidden sm:inline-block">NEON PRESENTATION</span>
+                </h1>
+                <p class="text-xs text-slate-400 font-rajdhani hidden sm:block">Интерактивный путь к взаимопониманию</p>
+            </div>
+        </div>
+
+        <!-- Controls Header Right -->
+        <div class="flex items-center space-x-3">
+            <button id="overviewBtn" title="Обзор слайдов (M)" class="px-3 py-2 rounded-lg bg-slate-900/80 border border-slate-700 hover:border-neonCyan text-slate-300 hover:text-neonCyan transition-all flex items-center text-xs font-rajdhani font-semibold tracking-wider">
+                <i class="fa-solid fa-border-all mr-2"></i> <span class="hidden md:inline">СЛАЙДЫ</span>
+            </button>
+
+            <button id="audioToggleBtn" title="Звуковой эффект" class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-700 hover:border-neonPurple text-slate-300 hover:text-neonPurple transition-all">
+                <i id="audioIcon" class="fa-solid fa-volume-high text-xs"></i>
+            </button>
+
+            <button id="fullscreenBtn" title="Полноэкранный режим (F)" class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-700 hover:border-neonCyan text-slate-300 hover:text-neonCyan transition-all">
+                <i id="fullscreenIcon" class="fa-solid fa-expand text-xs"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Presentation Container -->
+    <main id="presentationApp" class="relative w-full h-full pt-16 pb-20 flex justify-center items-center">
+        
+        <!-- SLIDE 1: Title -->
+        <section class="slide active" data-slide="0">
+            <div class="max-w-4xl w-full text-center space-y-8 animate-item" style="animation-delay: 0.1s;">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/60 border border-neonCyan/40 text-neonCyan text-sm font-rajdhani tracking-widest font-semibold uppercase mb-2 shadow-neonCyan">
+                    <i class="fa-solid fa-sparkles"></i> Главная тема
+                </div>
+                
+                <h1 class="text-5xl sm:text-7xl font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-300 to-pink-500 tracking-tight leading-tight pulse-glow">
+                    ТОЛЕРАНТНОСТЬ
+                </h1>
+                
+                <p class="text-xl sm:text-2xl text-slate-300 font-rajdhani font-medium max-w-2xl mx-auto leading-relaxed">
+                    Толерантность — путь к миру и взаимопониманию.
+                </p>
+
+                <div class="glass-card rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto border-t-2 border-t-neonCyan text-slate-200 shadow-2xl relative overflow-hidden group">
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-neonCyan/10 rounded-full blur-2xl group-hover:bg-neonCyan/20 transition-all"></div>
+                    <div class="flex items-start space-x-4 text-left">
+                        <div class="p-3 bg-cyan-500/10 border border-neonCyan/40 rounded-xl text-neonCyan text-2xl shrink-0 mt-1">
+                            <i class="fa-solid fa-heart-circle-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-orbitron font-bold text-neonCyan mb-1">Главное определение</h3>
+                            <p class="text-slate-300 text-base leading-relaxed">
+                                Толерантность — это уважение, доброта и принятие людей независимо от их различий.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <button onclick="nextSlide()" class="btn-neon-cyan px-8 py-3.5 rounded-xl font-orbitron font-semibold text-sm tracking-wider flex items-center mx-auto group">
+                        НАЧАТЬ ПРОСМОТР <i class="fa-solid fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: What is Tolerance -->
+        <section class="slide" data-slide="1">
+            <div class="max-w-4xl w-full space-y-6">
+                <div class="text-center animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonCyan font-rajdhani font-semibold tracking-widest text-sm uppercase">Слайд 02</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Что такое <span class="neon-text-cyan">толерантность?</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <!-- Aspect 1 -->
+                    <div class="glass-card rounded-2xl p-6 border-l-4 border-l-neonCyan animate-item" style="animation-delay: 0.2s;">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-neonCyan/30 flex items-center justify-center text-neonCyan text-xl">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <h3 class="font-orbitron font-bold text-lg text-white">Уважительное отношение</h3>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed font-sans text-sm sm:text-base">
+                            Толерантность — это уважительное отношение к другим людям, их культуре, традициям, взглядам и индивидуальным особенностям.
+                        </p>
+                    </div>
+
+                    <!-- Aspect 2 -->
+                    <div class="glass-card rounded-2xl p-6 border-l-4 border-l-neonPurple animate-item" style="animation-delay: 0.3s;">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-neonPurple/30 flex items-center justify-center text-neonPurple text-xl">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                            </div>
+                            <h3 class="font-orbitron font-bold text-lg text-white">Принятие уникальности</h3>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed font-sans text-sm sm:text-base">
+                            Это умение искренне принимать людей такими, какие они есть, без стремления подогнать их под свои личные стандарты.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Quote Card -->
+                <div class="glass-card rounded-2xl p-6 text-center border border-slate-700/60 bg-slate-900/40 animate-item" style="animation-delay: 0.4s;">
+                    <i class="fa-solid fa-quote-left text-neonCyan/40 text-3xl mb-2 block"></i>
+                    <p class="text-base sm:text-lg italic text-slate-200 font-rajdhani">
+                        «Толерантность означает уважение, принятие и правильное понимание богатого многообразия культур нашего мира.»
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: Key Qualities -->
+        <section class="slide" data-slide="2">
+            <div class="max-w-5xl w-full space-y-6">
+                <div class="text-center animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonPurple font-rajdhani font-semibold tracking-widest text-sm uppercase">Слайд 03</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Основные качества <span class="neon-text-purple">толерантного человека</span>
+                    </h2>
+                </div>
+
+                <!-- 5 Qualities Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-6">
+                    <div class="glass-card p-5 rounded-2xl flex flex-col items-start space-y-3 hover:scale-105 transition-all animate-item" style="animation-delay: 0.2s;">
+                        <div class="p-3 rounded-xl bg-cyan-500/10 text-neonCyan border border-cyan-500/30 text-xl">
+                            <i class="fa-solid fa-face-smile-beam"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Доброта и уважение</h3>
+                        <p class="text-xs text-slate-400">Проявление искреннего теплого отношения к каждому человеку вокруг.</p>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl flex flex-col items-start space-y-3 hover:scale-105 transition-all animate-item" style="animation-delay: 0.25s;">
+                        <div class="p-3 rounded-xl bg-purple-500/10 text-neonPurple border border-purple-500/30 text-xl">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Терпение и понимание</h3>
+                        <p class="text-xs text-slate-400">Способность проявлять выдержку и стремиться понять позицию другого.</p>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl flex flex-col items-start space-y-3 hover:scale-105 transition-all animate-item" style="animation-delay: 0.3s;">
+                        <div class="p-3 rounded-xl bg-pink-500/10 text-neonPink border border-pink-500/30 text-xl">
+                            <i class="fa-solid fa-ear-listen"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Умение слушать других</h3>
+                        <p class="text-xs text-slate-400">Готовность выслушать собеседника без предубеждений и перебивания.</p>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl flex flex-col items-start space-y-3 hover:scale-105 transition-all animate-item" style="animation-delay: 0.35s;">
+                        <div class="p-3 rounded-xl bg-blue-500/10 text-neonBlue border border-blue-500/30 text-xl">
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Сострадание и помощь</h3>
+                        <p class="text-xs text-slate-400">Эмпатия к чужим трудностям и активное желание прийти на помощь.</p>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-2xl flex flex-col items-start space-y-3 hover:scale-105 transition-all sm:col-span-2 lg:col-span-1 animate-item" style="animation-delay: 0.4s;">
+                        <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xl">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Уважение к чужому мнению</h3>
+                        <p class="text-xs text-slate-400">Признание права каждого человека иметь свою точку зрения.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: Respect Different Cultures -->
+        <section class="slide" data-slide="3">
+            <div class="max-w-4xl w-full space-y-6">
+                <div class="text-center animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonCyan font-rajdhani font-semibold tracking-widest text-sm uppercase">Слайд 04</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Уважение к <span class="neon-text-cyan">разным культурам</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-6">
+                    <!-- Left visual -->
+                    <div class="glass-card rounded-2xl p-8 flex flex-col items-center text-center relative overflow-hidden animate-item" style="animation-delay: 0.2s;">
+                        <div class="w-32 h-32 rounded-full border-2 border-dashed border-neonCyan flex items-center justify-center animate-spin-slow mb-4 relative">
+                            <i class="fa-solid fa-globe text-6xl text-neonCyan pulse-glow"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-lg text-white mb-2">Единство в многообразии</h3>
+                        <p class="text-xs text-slate-300">В нашем мире переплетаются тысячи уникальных традиций и обычаев.</p>
+                    </div>
+
+                    <!-- Right text contents -->
+                    <div class="space-y-4 animate-item" style="animation-delay: 0.3s;">
+                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-cyan-400">
+                            <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
+                                В мире живут люди самых разных национальностей, религий и мировоззрений.
+                            </p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-purple-500">
+                            <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
+                                <strong class="text-neonPurple font-semibold">Каждая культура уникальна</strong> и заслуживает глубокого уважения.
+                            </p>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border-l-4 border-l-pink-500">
+                            <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
+                                Мы должны с открытым сердцем уважать традиции, историю и обычаи всех народов Земли.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: Tolerance in School -->
+        <section class="slide" data-slide="4">
+            <div class="max-w-4xl w-full space-y-6">
+                <div class="text-center animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonPink font-rajdhani font-semibold tracking-widest text-sm uppercase">Слайд 05</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Толерантность <span class="neon-text-pink">в школе</span>
+                    </h2>
+                    <p class="text-slate-400 text-sm font-rajdhani mt-1">Проявление в повседневной школьной жизни</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                    <!-- Rule 1 -->
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 border-l-4 border-l-pink-500 animate-item" style="animation-delay: 0.2s;">
+                        <div class="w-10 h-10 rounded-lg bg-pink-500/20 text-neonPink flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+                        <span class="text-slate-200 font-medium text-sm sm:text-base">Не обижать одноклассников</span>
+                    </div>
+
+                    <!-- Rule 2 -->
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 border-l-4 border-l-cyan-400 animate-item" style="animation-delay: 0.25s;">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/20 text-neonCyan flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-hand-holding-hand"></i>
+                        </div>
+                        <span class="text-slate-200 font-medium text-sm sm:text-base">Помогать другим в учебе и жизни</span>
+                    </div>
+
+                    <!-- Rule 3 -->
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 border-l-4 border-l-purple-500 animate-item" style="animation-delay: 0.3s;">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-neonPurple flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
+                        <span class="text-slate-200 font-medium text-sm sm:text-base">Уважать мнение окружающих</span>
+                    </div>
+
+                    <!-- Rule 4 -->
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 border-l-4 border-l-amber-400 animate-item" style="animation-delay: 0.35s;">
+                        <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-face-smile"></i>
+                        </div>
+                        <span class="text-slate-200 font-medium text-sm sm:text-base">Не высмеивать чужую внешность</span>
+                    </div>
+
+                    <!-- Rule 5 (Full Span) -->
+                    <div class="glass-card p-4 rounded-xl flex items-center justify-center space-x-4 border-l-4 border-l-emerald-400 sm:col-span-2 animate-item" style="animation-delay: 0.4s;">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-people-group"></i>
+                        </div>
+                        <span class="text-slate-100 font-bold text-base sm:text-lg">Дружить со всеми и поддерживать каждого!</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: Why is Tolerance Important? -->
+        <section class="slide" data-slide="5">
+            <div class="max-w-5xl w-full space-y-6">
+                <div class="text-center animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonCyan font-rajdhani font-semibold tracking-widest text-sm uppercase">Слайд 06</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Почему важна <span class="neon-text-cyan">толерантность?</span>
+                    </h2>
+                    <p class="text-slate-300 text-base max-w-xl mx-auto mt-2">
+                        Толерантность помогает людям жить в мире и гармонии.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
+                    <div class="glass-card p-6 rounded-2xl text-center flex flex-col items-center space-y-3 animate-item" style="animation-delay: 0.2s;">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-neonCyan/40 flex items-center justify-center text-neonCyan text-2xl mb-2">
+                            <i class="fa-solid fa-peace"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Избегать конфликтов</h3>
+                        <p class="text-xs text-slate-400">Предотвращает непонимание и ссоры между людьми.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl text-center flex flex-col items-center space-y-3 animate-item" style="animation-delay: 0.25s;">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-neonPurple/40 flex items-center justify-center text-neonPurple text-2xl mb-2">
+                            <i class="fa-solid fa-comments"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Находить общий язык</h3>
+                        <p class="text-xs text-slate-400">Помогает выстроить конструктивный диалог с кем угодно.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl text-center flex flex-col items-center space-y-3 animate-item" style="animation-delay: 0.3s;">
+                        <div class="w-14 h-14 rounded-2xl bg-pink-500/10 border border-neonPink/40 flex items-center justify-center text-neonPink text-2xl mb-2">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Строить дружбу</h3>
+                        <p class="text-xs text-slate-400">Формирует надежные связующие узы между людьми.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl text-center flex flex-col items-center space-y-3 animate-item" style="animation-delay: 0.35s;">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center text-emerald-400 text-2xl mb-2">
+                            <i class="fa-solid fa-earth-americas"></i>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-base text-white">Дружное общество</h3>
+                        <p class="text-xs text-slate-400">Создает гармоничную и процветающую среду для всех.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: Obstacles to Tolerance -->
+        <section class="slide" data-slide="6">
+            <div class="max-w-4xl w-full space-y-6">
+                <div class="text-center animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonPink font-rajdhani font-semibold tracking-widest text-sm uppercase">Слайд 07</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Что <span class="neon-text-pink">мешает</span> толерантности?
+                    </h2>
+                    <p class="text-slate-400 text-sm mt-1">Основные препятствия на пути к согласию</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                    <div class="glass-card-warning p-5 rounded-2xl flex items-start space-x-4 animate-item" style="animation-delay: 0.2s;">
+                        <div class="p-3 bg-red-500/20 border border-red-500/40 text-neonPink rounded-xl text-xl shrink-0">
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-orbitron font-bold text-white text-base">Расизм и дискриминация</h3>
+                            <p class="text-xs text-slate-400 mt-1">Неравное отношение к людям по различным признакам.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card-warning p-5 rounded-2xl flex items-start space-x-4 animate-item" style="animation-delay: 0.25s;">
+                        <div class="p-3 bg-red-500/20 border border-red-500/40 text-neonPink rounded-xl text-xl shrink-0">
+                            <i class="fa-solid fa-comment-slash"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-orbitron font-bold text-white text-base">Оскорбления и насмешки</h3>
+                            <p class="text-xs text-slate-400 mt-1">Причинение эмоциональной боли окружающим.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card-warning p-5 rounded-2xl flex items-start space-x-4 animate-item" style="animation-delay: 0.3s;">
+                        <div class="p-3 bg-red-500/20 border border-red-500/40 text-neonPink rounded-xl text-xl shrink-0">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-orbitron font-bold text-white text-base">Нетерпимость</h3>
+                            <p class="text-xs text-slate-400 mt-1">Отказ принимать отличающееся чужое мнение.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card-warning p-5 rounded-2xl flex items-start space-x-4 animate-item" style="animation-delay: 0.35s;">
+                        <div class="p-3 bg-red-500/20 border border-red-500/40 text-neonPink rounded-xl text-xl shrink-0">
+                            <i class="fa-solid fa-eye-slash"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-orbitron font-bold text-white text-base">Предрассудки</h3>
+                            <p class="text-xs text-slate-400 mt-1">Стереотипы, мешающие объективному восприятию.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card-warning p-5 rounded-2xl flex items-start space-x-4 sm:col-span-2 lg:col-span-2 animate-item" style="animation-delay: 0.4s;">
+                        <div class="p-3 bg-red-500/20 border border-red-500/40 text-neonPink rounded-xl text-xl shrink-0">
+                            <i class="fa-solid fa-skull-crossbones"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-orbitron font-bold text-white text-base">Ненависть и вражда</h3>
+                            <p class="text-xs text-slate-400 mt-1">Разрушительные чувства, которые разделяют людей и уничтожают доверие.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: How to become Tolerant -->
+        <section class="slide" data-slide="7">
+            <div class="max-w-4xl w-full space-y-6">
+                <div class="text-center animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonCyan font-rajdhani font-semibold tracking-widest text-sm uppercase">Слайд 08</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Как стать <span class="neon-text-cyan">толерантным человеком?</span>
+                    </h2>
+                </div>
+
+                <div class="space-y-3.5 mt-6 max-w-3xl mx-auto">
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 hover:border-neonCyan transition-all animate-item" style="animation-delay: 0.2s;">
+                        <span class="font-orbitron font-bold text-lg text-neonCyan w-8 h-8 rounded-full bg-cyan-500/20 border border-neonCyan flex items-center justify-center shrink-0">1</span>
+                        <p class="text-slate-200 text-sm sm:text-base">Будь всегда вежливым и доброжелательным с окружающими.</p>
+                    </div>
+
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 hover:border-neonPurple transition-all animate-item" style="animation-delay: 0.25s;">
+                        <span class="font-orbitron font-bold text-lg text-neonPurple w-8 h-8 rounded-full bg-purple-500/20 border border-neonPurple flex items-center justify-center shrink-0">2</span>
+                        <p class="text-slate-200 text-sm sm:text-base">Уважай чувства и личные границы других людей.</p>
+                    </div>
+
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 hover:border-neonPink transition-all animate-item" style="animation-delay: 0.3s;">
+                        <span class="font-orbitron font-bold text-lg text-neonPink w-8 h-8 rounded-full bg-pink-500/20 border border-neonPink flex items-center justify-center shrink-0">3</span>
+                        <p class="text-slate-200 text-sm sm:text-base">Не суди людей по их внешности, стилю или особенностям.</p>
+                    </div>
+
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 hover:border-neonBlue transition-all animate-item" style="animation-delay: 0.35s;">
+                        <span class="font-orbitron font-bold text-lg text-neonBlue w-8 h-8 rounded-full bg-blue-500/20 border border-neonBlue flex items-center justify-center shrink-0">4</span>
+                        <p class="text-slate-200 text-sm sm:text-base">Учись спокойно принимать противоположные мнения.</p>
+                    </div>
+
+                    <div class="glass-card p-4 rounded-xl flex items-center space-x-4 hover:border-emerald-400 transition-all animate-item" style="animation-delay: 0.4s;">
+                        <span class="font-orbitron font-bold text-lg text-emerald-400 w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center shrink-0">5</span>
+                        <p class="text-slate-200 text-sm sm:text-base">Искренне помогай тем, кому действительно нужна поддержка.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: Basis of Peace -->
+        <section class="slide" data-slide="8">
+            <div class="max-w-4xl w-full text-center space-y-8">
+                <div class="animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonPurple font-rajdhani font-semibold tracking-widest text-sm uppercase">Слайд 09</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Толерантность — <span class="neon-text-purple">основа мира</span>
+                    </h2>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 sm:p-12 relative overflow-hidden border-2 border-neonPurple/40 shadow-neonPurple animate-item" style="animation-delay: 0.2s;">
+                    <div class="absolute -top-10 -right-10 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-cyan-600/20 rounded-full blur-3xl"></div>
+
+                    <i class="fa-solid fa-dove text-5xl text-neonPurple mb-6 block pulse-glow"></i>
+
+                    <p class="text-xl sm:text-2xl text-slate-100 font-rajdhani font-semibold leading-relaxed mb-6">
+                        Мир становится лучше, когда люди уважают и поддерживают друг друга.
+                    </p>
+
+                    <div class="h-0.5 w-24 bg-gradient-to-r from-neonCyan via-neonPurple to-neonPink mx-auto my-6"></div>
+
+                    <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                        Каждый из нас способен сделать мир вокруг добрее, если будет проявлять чуткое терпение, уважение и искреннее понимание.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: Conclusion -->
+        <section class="slide" data-slide="9">
+            <div class="max-w-4xl w-full text-center space-y-8">
+                <div class="animate-item" style="animation-delay: 0.1s;">
+                    <span class="text-neonCyan font-rajdhani font-semibold tracking-widest text-sm uppercase">Финал</span>
+                    <h2 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white mt-1">
+                        Заключение
+                    </h2>
+                </div>
+
+                <!-- Golden Rule Card -->
+                <div class="glass-card p-8 sm:p-10 rounded-3xl border-2 border-neonCyan/50 shadow-neonCyan relative animate-item" style="animation-delay: 0.2s;">
+                    <i class="fa-solid fa-quote-left text-neonCyan text-3xl mb-4 opacity-80"></i>
+                    <blockquote class="text-2xl sm:text-3xl font-orbitron font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-pink-300 leading-snug">
+                        «Относись к другим так, как хочешь, чтобы относились к тебе».
+                    </blockquote>
+                </div>
+
+                <div class="space-y-4 animate-item" style="animation-delay: 0.3s;">
+                    <p class="text-lg sm:text-xl text-slate-300 font-rajdhani font-semibold">
+                        Толерантность начинается с каждого из нас.
+                    </p>
+                    <p class="text-base text-slate-400">
+                        Давайте будем добрее, терпимее и внимательнее друг к другу!
+                    </p>
+                </div>
+
+                <div class="pt-4 animate-item" style="animation-delay: 0.4s;">
+                    <div class="inline-block px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 border border-neonCyan/60 text-white font-orbitron font-bold text-xl tracking-wider shadow-2xl">
+                        <i class="fa-solid fa-heart text-neonPink mr-3 animate-bounce"></i> Спасибо за внимание!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Controls Footer -->
+    <footer class="fixed bottom-0 left-0 right-0 z-30 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-3 bg-gradient-to-t from-black/90 to-transparent backdrop-blur-xs">
+        
+        <!-- Slide Progress Indicators -->
+        <div class="flex items-center space-x-1.5" id="dotsContainer">
+            <!-- Dynamically generated dot triggers -->
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex items-center space-x-4">
+            <button id="prevBtn" onclick="prevSlide()" class="btn-neon-cyan px-4 py-2 rounded-lg font-orbitron text-xs font-semibold flex items-center">
+                <i class="fa-solid fa-chevron-left mr-2"></i> НАЗАД
+            </button>
+
+            <!-- Counter Badge -->
+            <div id="slideCounter" class="font-orbitron font-bold text-sm text-neonCyan px-3 py-1 bg-slate-900/80 rounded-md border border-cyan-500/30">
+                01 / 10
+            </div>
+
+            <button id="nextBtn" onclick="nextSlide()" class="btn-neon-cyan px-4 py-2 rounded-lg font-orbitron text-xs font-semibold flex items-center">
+                ВПЕРЕД <i class="fa-solid fa-chevron-right ml-2"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Slide Overview Modal Window -->
+    <div id="overviewModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col p-6 sm:p-10">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="font-orbitron font-bold text-xl text-neonCyan flex items-center">
+                <i class="fa-solid fa-grip mr-3"></i> ОБЗОР ВСЕХ СЛАЙДОВ
+            </h2>
+            <button id="closeOverviewBtn" class="p-2 text-slate-400 hover:text-white text-2xl transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Thumbnail Grid -->
+        <div id="thumbnailGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 overflow-y-auto pr-2 my-auto">
+            <!-- JS populated thumbnails -->
+        </div>
+    </div>
+
+    <!-- JavaScript Presentation Logic -->
+    <script>
+        // State variables
+        let currentSlide = 0;
+        const totalSlides = 10;
+        let audioEnabled = true;
+
+        const slideTitles = [
+            "01. Титульный",
+            "02. Что такое толерантность?",
+            "03. Качества человека",
+            "04. Уважение культур",
+            "05. В школе",
+            "06. Почему это важно",
+            "07. Что мешает",
+            "08. Как стать толерантным",
+            "09. Основа мира",
+            "10. Заключение"
+        ];
+
+        // Synthesize simple UI beep sounds using Web Audio API
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playBeep(freq = 440, duration = 0.08) {
+            if (!audioEnabled) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.log('Audio playback prevented');
+            }
+        }
+
+        // Particle background animation logic
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.radius = Math.random() * 2 + 1;
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.color = Math.random() > 0.5 ? '#00f3ff' : '#b026ff';
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Initialize particle system
+        for (let i = 0; i < 60; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Connect nearby nodes
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 130) {
+                        ctx.save();
+                        ctx.globalAlpha = (1 - dist / 130) * 0.15;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = '#00f3ff';
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        // Slide Navigation Logic
+        const slides = document.querySelectorAll('.slide');
+        const slideCounter = document.getElementById('slideCounter');
+        const dotsContainer = document.getElementById('dotsContainer');
+
+        // Create Navigation Dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'bg-neonCyan w-6 shadow-neonCyan' : 'bg-slate-700 hover:bg-slate-500'}`;
+            dot.setAttribute('title', slideTitles[i]);
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+
+        function updateSlideUI() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active', 'prev-slide');
+                if (idx === currentSlide) {
+                    slide.classList.add('active');
+                } else if (idx < currentSlide) {
+                    slide.classList.add('prev-slide');
+                }
+            });
+
+            // Update Counter
+            slideCounter.innerText = `${String(currentSlide + 1).padStart(2, '0')} / ${totalSlides}`;
+
+            // Update Dot styles
+            const dots = dotsContainer.children;
+            Array.from(dots).forEach((dot, idx) => {
+                if (idx === currentSlide) {
+                    dot.className = 'w-6 h-2.5 rounded-full bg-neonCyan shadow-neonCyan transition-all duration-300';
+                } else {
+                    dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all duration-300';
+                }
+            });
+
+            // Update Button states
+            document.getElementById('prevBtn').style.opacity = currentSlide === 0 ? '0.4' : '1';
+            document.getElementById('nextBtn').style.opacity = currentSlide === totalSlides - 1 ? '0.4' : '1';
+        }
+
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides && index !== currentSlide) {
+                currentSlide = index;
+                playBeep(520, 0.08);
+                updateSlideUI();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                playBeep(600, 0.08);
+                updateSlideUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                playBeep(400, 0.08);
+                updateSlideUI();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'm' || e.key === 'M' || e.key === 'Ь' || e.key === 'ь') {
+                toggleOverviewModal();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        // Touch Swipe gestures support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide(); // Swipe left -> Next
+            } else if (touchEndX > touchStartX + 50) {
+                prevSlide(); // Swipe right -> Prev
+            }
+        }
+
+        // Overview Modal logic
+        const modal = document.getElementById('overviewModal');
+        const overviewBtn = document.getElementById('overviewBtn');
+        const closeOverviewBtn = document.getElementById('closeOverviewBtn');
+        const thumbnailGrid = document.getElementById('thumbnailGrid');
+
+        function generateThumbnails() {
+            thumbnailGrid.innerHTML = '';
+            slideTitles.forEach((title, i) => {
+                const card = document.createElement('div');
+                card.className = `glass-card p-4 rounded-xl cursor-pointer hover:border-neonCyan transition-all flex flex-col justify-between h-32 border ${i === currentSlide ? 'border-neonCyan bg-cyan-950/40 shadow-neonCyan' : 'border-slate-800'}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-center text-xs text-neonCyan font-orbitron">
+                        <span>СЛАЙД ${i + 1}</span>
+                        ${i === currentSlide ? '<i class="fa-solid fa-circle-dot"></i>' : ''}
+                    </div>
+                    <div class="font-bold text-sm text-slate-100 line-clamp-2">${title}</div>
+                    <div class="text-[10px] text-slate-400 font-rajdhani">Нажмите для перехода</div>
+                `;
+                card.onclick = () => {
+                    goToSlide(i);
+                    toggleOverviewModal();
+                };
+                thumbnailGrid.appendChild(card);
+            });
+        }
+
+        function toggleOverviewModal() {
+            const isOpen = modal.classList.contains('opacity-100');
+            if (!isOpen) {
+                generateThumbnails();
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        overviewBtn.addEventListener('click', toggleOverviewModal);
+        closeOverviewBtn.addEventListener('click', toggleOverviewModal);
+
+        // Fullscreen toggle logic
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const fullscreenIcon = document.getElementById('fullscreenIcon');
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.log(err));
+                fullscreenIcon.className = 'fa-solid fa-compress text-xs';
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    fullscreenIcon.className = 'fa-solid fa-expand text-xs';
+                }
+            }
+        }
+
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // Mute / Unmute Audio logic
+        const audioToggleBtn = document.getElementById('audioToggleBtn');
+        const audioIcon = document.getElementById('audioIcon');
+
+        audioToggleBtn.addEventListener('click', () => {
+            audioEnabled = !audioEnabled;
+            if (audioEnabled) {
+                audioIcon.className = 'fa-solid fa-volume-high text-xs text-neonPurple';
+                playBeep(880, 0.1);
+            } else {
+                audioIcon.className = 'fa-solid fa-volume-xmark text-xs text-slate-500';
+            }
+        });
+
+        // Interactive 3D hover tilt effect on slide elements
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 12;
+                const rotateY = (centerX - x) / 12;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            });
+        });
+
+        // Initialize UI on load
+        updateSlideUI();
+    </script>
+</body>
+</html>
